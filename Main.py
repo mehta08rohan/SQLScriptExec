@@ -8,6 +8,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import QLineEdit
 import pyodbc
 
 
@@ -32,13 +33,29 @@ class Ui_MainWindow(object):
         self.comboBox = QtWidgets.QComboBox(self.groupBox)
         self.comboBox.setGeometry(QtCore.QRect(330, 170, 261, 41))
         self.comboBox.setObjectName("comboBox")
+        #Create Run Button
+        self.Run = QtWidgets.QPushButton(self.centralwidget)
+        self.Run.setGeometry(QtCore.QRect(531, 470, 161, 41))
+        self.Run.setObjectName("Run")
 
+        #Adding Text Box
+        self.nameTextBox = QLineEdit(self.centralwidget)
+        self.nameTextBox.setGeometry(QtCore.QRect(330, 270, 261, 41))
+
+        #Add item to Commbox
         for i in dblist:
             self.comboBox.addItem(i)
 
+        # Label for DB_Name
         self.label = QtWidgets.QLabel(self.groupBox)
         self.label.setGeometry(QtCore.QRect(40, 170, 221, 31))
         self.label.setObjectName("label")
+
+        #Label for Path
+        self.label1 = QtWidgets.QLabel(self.groupBox)
+        self.label1.setGeometry(QtCore.QRect(40, 270, 221, 31))
+        self.label1.setObjectName("label1")
+
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 26))
@@ -52,6 +69,7 @@ class Ui_MainWindow(object):
         # self.getDatabasesNames('localhost')
 
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
+        self.Run.clicked.connect(self.RunQuery)
 
 
 
@@ -78,6 +96,14 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.groupBox.setTitle(_translate("MainWindow", "Sql Exec"))
         self.label.setText(_translate("MainWindow", "Select Database"))
+        self.Run.setText(_translate("MainWindow", "Run"))
+        self.label1.setText(_translate("MainWindow", "Folder Path"))
+
+    def RunQuery(self):
+        current_db = self.comboBox.currentText()
+        path = self.nameTextBox.text()
+        print(current_db)
+        print(path)
 
 
 if __name__ == "__main__":
